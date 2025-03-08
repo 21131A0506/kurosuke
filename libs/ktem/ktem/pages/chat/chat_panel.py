@@ -8,11 +8,10 @@ if not KH_DEMO_MODE:
     PLACEHOLDER_TEXT = (
         "This is the beginning of a new conversation.\n"
         "Start by uploading a file or a web URL. "
-        "Visit Files tab for more options (e.g: GraphRAG)."
     )
 else:
     PLACEHOLDER_TEXT = (
-        "Welcome to Kotaemon Demo. "
+        "Welcome to Kurosuke Demo. "
         "Start by browsing preloaded conversations to get onboard.\n"
         "Check out Hint section for more tips."
     )

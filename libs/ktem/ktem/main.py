@@ -2,7 +2,6 @@ import gradio as gr
 from decouple import config
 from ktem.app import BaseApp
 from ktem.pages.chat import ChatPage
-from ktem.pages.help import HelpPage
 from ktem.pages.resources import ResourcesTab
 from ktem.pages.settings import SettingsPage
 from ktem.pages.setup import SetupPage
@@ -110,15 +109,6 @@ class App(BaseApp):
                     elem_classes=["fill-main-area-height", "scrollable"],
                 ) as self._tabs["settings-tab"]:
                     self.settings_page = SettingsPage(self)
-
-            with gr.Tab(
-                "Help",
-                elem_id="help-tab",
-                id="help-tab",
-                visible=not self.f_user_management,
-                elem_classes=["fill-main-area-height", "scrollable"],
-            ) as self._tabs["help-tab"]:
-                self.help_page = HelpPage(self)
 
         if KH_ENABLE_FIRST_SETUP:
             with gr.Column(visible=False) as self.setup_page_wrapper:
