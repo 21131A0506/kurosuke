@@ -53,24 +53,10 @@ class EmbeddingManager:
                     self._models["default"] = self._models[item.name]
 
     def load_vendors(self):
-        from kotaemon.embeddings import (
-            AzureOpenAIEmbeddings,
-            FastEmbedEmbeddings,
-            LCCohereEmbeddings,
-            LCGoogleEmbeddings,
-            LCHuggingFaceEmbeddings,
-            OpenAIEmbeddings,
-            TeiEndpointEmbeddings,
-        )
+        from kotaemon.embeddings import LCGoogleEmbeddings
 
         self._vendors = [
-            AzureOpenAIEmbeddings,
-            OpenAIEmbeddings,
-            FastEmbedEmbeddings,
-            LCCohereEmbeddings,
-            LCHuggingFaceEmbeddings,
             LCGoogleEmbeddings,
-            TeiEndpointEmbeddings,
         ]
 
     def __getitem__(self, key: str) -> BaseEmbeddings:

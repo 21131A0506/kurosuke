@@ -158,19 +158,6 @@ if OPENAI_API_KEY:
         },
         "default": IS_OPENAI_DEFAULT,
     }
-    KH_EMBEDDINGS["openai"] = {
-        "spec": {
-            "__type__": "kotaemon.embeddings.OpenAIEmbeddings",
-            "base_url": config("OPENAI_API_BASE", default="https://api.openai.com/v1"),
-            "api_key": OPENAI_API_KEY,
-            "model": config(
-                "OPENAI_EMBEDDINGS_MODEL", default="text-embedding-3-large"
-            ),
-            "timeout": 10,
-            "context_length": 8191,
-        },
-        "default": IS_OPENAI_DEFAULT,
-    }
 
 if config("LOCAL_MODEL", default=""):
     KH_LLMS["ollama"] = {
@@ -192,22 +179,6 @@ if config("LOCAL_MODEL", default=""):
         "default": False,
     }
 
-    KH_EMBEDDINGS["ollama"] = {
-        "spec": {
-            "__type__": "kotaemon.embeddings.OpenAIEmbeddings",
-            "base_url": KH_OLLAMA_URL,
-            "model": config("LOCAL_MODEL_EMBEDDINGS", default="nomic-embed-text"),
-            "api_key": "ollama",
-        },
-        "default": False,
-    }
-    KH_EMBEDDINGS["fast_embed"] = {
-        "spec": {
-            "__type__": "kotaemon.embeddings.FastEmbedEmbeddings",
-            "model_name": "BAAI/bge-base-en-v1.5",
-        },
-        "default": False,
-    }
 
 # additional LLM configurations
 KH_LLMS["claude"] = {
@@ -245,15 +216,7 @@ KH_LLMS["cohere"] = {
 }
 
 # additional embeddings configurations
-KH_EMBEDDINGS["cohere"] = {
-    "spec": {
-        "__type__": "kotaemon.embeddings.LCCohereEmbeddings",
-        "model": "embed-multilingual-v3.0",
-        "cohere_api_key": config("COHERE_API_KEY", default="your-key"),
-        "user_agent": "default",
-    },
-    "default": False,
-}
+
 KH_EMBEDDINGS["google"] = {
     "spec": {
         "__type__": "kotaemon.embeddings.LCGoogleEmbeddings",
@@ -262,13 +225,7 @@ KH_EMBEDDINGS["google"] = {
     },
     "default": not IS_OPENAI_DEFAULT,
 }
-# KH_EMBEDDINGS["huggingface"] = {
-#     "spec": {
-#         "__type__": "kotaemon.embeddings.LCHuggingFaceEmbeddings",
-#         "model_name": "sentence-transformers/all-mpnet-base-v2",
-#     },
-#     "default": False,
-# }
+
 
 # default reranking models
 KH_RERANKINGS["cohere"] = {
@@ -317,40 +274,38 @@ SETTINGS_REASONING = {
     },
 }
 
-USE_GLOBAL_GRAPHRAG = config("USE_GLOBAL_GRAPHRAG", default=True, cast=bool)
-USE_NANO_GRAPHRAG = config("USE_NANO_GRAPHRAG", default=False, cast=bool)
-USE_LIGHTRAG = config("USE_LIGHTRAG", default=True, cast=bool)
-USE_MS_GRAPHRAG = config("USE_MS_GRAPHRAG", default=True, cast=bool)
+# USE_GLOBAL_GRAPHRAG = config("USE_GLOBAL_GRAPHRAG", default=True, cast=bool)
+# USE_NANO_GRAPHRAG = config("USE_NANO_GRAPHRAG", default=False, cast=bool)
+# USE_MS_GRAPHRAG = config("USE_MS_GRAPHRAG", default=True, cast=bool)
 
-GRAPHRAG_INDEX_TYPES = []
+# GRAPHRAG_INDEX_TYPES = []
 
-if USE_MS_GRAPHRAG:
-    GRAPHRAG_INDEX_TYPES.append("ktem.index.file.graph.GraphRAGIndex")
-if USE_NANO_GRAPHRAG:
-    GRAPHRAG_INDEX_TYPES.append("ktem.index.file.graph.NanoGraphRAGIndex")
-if USE_LIGHTRAG:
-    GRAPHRAG_INDEX_TYPES.append("ktem.index.file.graph.LightRAGIndex")
+# if USE_MS_GRAPHRAG:
+#     GRAPHRAG_INDEX_TYPES.append("ktem.index.file.graph.GraphRAGIndex")
+# if USE_NANO_GRAPHRAG:
+#     GRAPHRAG_INDEX_TYPES.append("ktem.index.file.graph.NanoGraphRAGIndex")
+
 
 KH_INDEX_TYPES = [
     "ktem.index.file.FileIndex",
-    *GRAPHRAG_INDEX_TYPES,
+    # *GRAPHRAG_INDEX_TYPES,
 ]
 
-GRAPHRAG_INDICES = [
-    {
-        "name": graph_type.split(".")[-1].replace("Index", "")
-        + " Collection",  # get last name
-        "config": {
-            "supported_file_types": (
-                ".png, .jpeg, .jpg, .tiff, .tif, .pdf, .xls, .xlsx, .doc, .docx, "
-                ".pptx, .csv, .html, .mhtml, .txt, .md, .zip"
-            ),
-            "private": True,
-        },
-        "index_type": graph_type,
-    }
-    for graph_type in GRAPHRAG_INDEX_TYPES
-]
+# GRAPHRAG_INDICES = [
+#     {
+#         "name": graph_type.split(".")[-1].replace("Index", "")
+#         + " Collection",  # get last name
+#         "config": {
+#             "supported_file_types": (
+#                 ".png, .jpeg, .jpg, .tiff, .tif, .pdf, .xls, .xlsx, .doc, .docx, "
+#                 ".pptx, .csv, .html, .mhtml, .txt, .md, .zip"
+#             ),
+#             "private": True,
+#         },
+#         "index_type": graph_type,
+#     }
+#     for graph_type in GRAPHRAG_INDEX_TYPES
+# ]
 
 KH_INDICES = [
     {
@@ -364,5 +319,5 @@ KH_INDICES = [
         },
         "index_type": "ktem.index.file.FileIndex",
     },
-    *GRAPHRAG_INDICES,
+    # *GRAPHRAG_INDICES,
 ]
