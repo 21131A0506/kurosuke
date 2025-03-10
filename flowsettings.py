@@ -14,18 +14,11 @@ this_file = getframeinfo(cur_frame).filename
 this_dir = Path(this_file).parent
 
 # change this if your app use a different name
-KH_PACKAGE_NAME = "kotaemon_app"
+KH_PACKAGE_NAME = "gvpbot_app"
 
-KH_APP_VERSION = config("KH_APP_VERSION", None)
-if not KH_APP_VERSION:
-    try:
-        # Caution: This might produce the wrong version
-        # https://stackoverflow.com/a/59533071
-        KH_APP_VERSION = version(KH_PACKAGE_NAME)
-    except Exception:
-        KH_APP_VERSION = "local"
+KH_APP_VERSION = "1.0"
 
-KH_GRADIO_SHARE = config("KH_GRADIO_SHARE", default=False, cast=bool)
+KH_GRADIO_SHARE = config("KH_GRADIO_SHARE", default=True, cast=bool)
 KH_ENABLE_FIRST_SETUP = config("KH_ENABLE_FIRST_SETUP", default=True, cast=bool)
 KH_DEMO_MODE = config("KH_DEMO_MODE", default=False, cast=bool)
 KH_OLLAMA_URL = config("KH_OLLAMA_URL", default="http://localhost:11434/v1/")
@@ -55,12 +48,6 @@ KH_ZIP_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # zip input directory
 KH_ZIP_INPUT_DIR = KH_APP_DATA_DIR / "zip_cache_dir_in"
 KH_ZIP_INPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-# HF models can be big, let's store them in the app data directory so that it's easier
-# for users to manage their storage.
-# ref: https://huggingface.co/docs/huggingface_hub/en/guides/manage-cache
-os.environ["HF_HOME"] = str(KH_APP_DATA_DIR / "huggingface")
-os.environ["HF_HUB_CACHE"] = str(KH_APP_DATA_DIR / "huggingface")
 
 # doc directory
 KH_DOC_DIR = this_dir / "docs"
