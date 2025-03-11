@@ -18,7 +18,7 @@ KH_PACKAGE_NAME = "gvpbot_app"
 
 KH_APP_VERSION = "1.0"
 
-KH_GRADIO_SHARE = config("KH_GRADIO_SHARE", default=True, cast=bool)
+KH_GRADIO_SHARE = config("KH_GRADIO_SHARE", default=False, cast=bool)
 KH_ENABLE_FIRST_SETUP = config("KH_ENABLE_FIRST_SETUP", default=True, cast=bool)
 KH_DEMO_MODE = config("KH_DEMO_MODE", default=False, cast=bool)
 KH_OLLAMA_URL = config("KH_OLLAMA_URL", default="http://localhost:11434/v1/")
